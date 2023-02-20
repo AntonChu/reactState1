@@ -69,10 +69,28 @@ button:focus-visible {
 }
 .header {
   display: flex;
-
 }
 .header-item {
   padding: 5px 15px;
   margin: 0 10px;
   background-color: #7c7c7c;
+}
+.products {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 1700px;
+  width: 900px;
+}
+.product {
+  font-size: 0;
+  margin: 10px;
+  width: calc((100% - 60px) / 3);
+  
+}
+.item-img {
+  width: 100%
+}
+.active {
+  background-color: #747bff;
 }
