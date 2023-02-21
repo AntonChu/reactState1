@@ -1,5 +1,7 @@
-import{ useState } from 'react';
+import{ useState, useEffect } from 'react';
 import './App.css';
+import Toolbar from './components/Toolbar';
+import ProjectList from './components/ProjectList';
 
 
 
@@ -8,52 +10,20 @@ const Portfolio = (props) => {
   const [selected, setSelected] = useState(props.selected);
   const [projects, setProjects] = useState(props.projects);
   const onSelectFilter = (event) => {
-    setSelected((prev) => {
-      return prev = event.target.textContent});
-    setProjects((prev) => {
-      return prev.filter((el) => el.category === selected);
-    })
+    setSelected(event.target.textContent);
+    
   }
+  useEffect(() => {
+    const filteredProjects = selected === 'All' ? props.projects : props.projects.filter(project => project.category === selected);
+    setProjects(filteredProjects);
+    },[selected]
+  )
   
 	return (
 		<div>
 			<Toolbar filters={filters} selected={selected} onSelectFilters={onSelectFilter} />
       <ProjectList projects={projects} />
 		</div>
-	)
-}
-
-const Toolbar = (props) => {
-  const filters = props.filters;
-  const selected = props.selected;
-  const onSelectFilters = props.onSelectFilters;
-
-  const CreateHeader = () => {
-    return filters.map((el, index) => { 
-      if (el === selected) {
-        return <div className='header-item active' onClick={ onSelectFilters } key={index}>{ el }</div>;
-      } else {
-        return <div className='header-item' onClick={ onSelectFilters } key={index}>{ el }</div> ;
-      }
-    })
-  }
-
-  return (
-    <div className='header'>
-      <CreateHeader />
-    </div>
-  )
-}
-
-const ProjectList = (props) => {
-  const CreateProductsBlock = () => {
-    return props.projects.map((item, index) => <div className='product' key={index}><img src={ item.img } className="item-img" /></div>)
-  }
-
-	return (
-    <div className='products'>
-      <CreateProductsBlock />
-    </div>
 	)
 }
 
